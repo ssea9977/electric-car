@@ -1,0 +1,128 @@
+properties([pipelineTriggers([githubPush()])])
+
+def SLACK_CHANNEL = "project"
+def DATE = new Date();
+
+def notifyStarted(slack_channel) {
+    slackSend (channel: "${slack_channel}", color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+}
+
+
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: git
+    image: alpine/git
+    tty: true
+    command: ["cat"]
+    env:
+    - name: PROJECT_URL
+      value: https://github.com/ssea9977/electric-car
+  - name: docker
+    image: docker
+    tty: true
+    command: ["cat"]
+    env:
+    - name: PROJECT_NAME
+      value: electric-car
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-socket
+  volumes:
+  - name: docker-socket
+    hostPath:
+      path: /var/run/docker.sock
+
+'''
+         }
+    }
+    stages {
+      stage('Start') {
+        steps {
+          notifyStarted(SLACK_CHANNEL)
+        }
+      }
+      stage('Checkout') {
+        steps {
+          container('git') {
+            sh "git clone \$PROJECT_URL"
+          }
+        }    
+      }
+      stage('Build') {
+        steps {
+          container('docker') {
+            sh """
+            cd electric-car
+            docker build -t \$PROJECT_NAME .
+            """
+          }
+        }    
+      }
+      stage('Push') {
+        steps {
+          container('docker') {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding',
+              credentialsId: 'dockerhub',
+              usernameVariable: 'DOCKERHUB_USER',
+              passwordVariable: 'DOCKERHUB_PASSWORD']]) {
+              sh """
+                docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}
+                docker tag \$PROJECT_NAME ${DOCKERHUB_USER}/\$PROJECT_NAME:${env.BUILD_NUMBER}
+                docker push ${DOCKERHUB_USER}/\$PROJECT_NAME:${env.BUILD_NUMBER}
+              """
+              }
+            }
+          }    
+        }
+      stage('Deploy'){
+        steps {
+          container('git'){
+              checkout([$class: 'GitSCM',
+                      branches: [[name: '*/master' ]],
+                      extensions: scm.extensions,
+                      userRemoteConfigs: [[
+                          url: 'git@github.com:ssea9977/electric-car.git',
+                          credentialsId: 'mygit',
+                      ]]
+              ])
+              sshagent(credentials: ['mygit']){
+                  sh("""
+                        #!/usr/bin/env bash
+                        set +x
+                        export GIT_SSH_COMMAND="ssh -oStrictHostKeyChecking=no"
+                        git config --global user.email "ssea9977@gmail.com"
+                        git checkout master
+                        cd helm/electric-car
+			cat <<EOF > Chart.yaml
+apiVersion: v2
+name: electric-car
+description: A Helm chart for Kubernetes
+type: application
+version: 0.1.0
+appVersion: ${env.BUILD_NUMBER}
+EOF
+                        git add .
+                        git commit -m "updated the image tag"
+                        git push -u origin master
+                    """)
+                }
+            }
+          }
+        }
+
+      }
+      post {
+        success {
+            slackSend (channel: SLACK_CHANNEL, color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+        failure {
+            slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+    }
+}

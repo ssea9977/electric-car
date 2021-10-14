@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html>
+	<style>
+      #bookmark-btn {
+      font-family: "Montserrat", sans-serif;
+      cursor: pointer;
+      width: 300px;
+      height: 40px;
+      font-size: 1rem;
+      background-color: var(--alt-color);
+      color: #fff;
+      outline: none;
+      border: 1px solid transparent;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+         left: 20px;
+         top: 1px;
+         bottom: 10px;
+      }
+
+		.wrap {position: absolute;left: 0;bottom: 40px;width: 500px;height: 300px;margin-left: -260px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+		.wrap * {padding: 0;margin: 0;}
+		.wrap .info {width: 500px; height: 288px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+		.wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+		.info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+		.info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+		.info .close:hover {cursor: pointer;}
+		.info .body {width: 500px; height: 280px; overflow-x:scroll; overflow-y:auto; scroll-margin-bottom: 5px;}
+		.info .desc {position: relative; margin: 5px 5px 5px 5px; height: 143px;}
+		.desc .ellipsis {font-size: 13px; overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+		.desc .jibun {font-size: 13px;color: #888;margin-top: -2px;}
+		.info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+		.info:after {content: '';position: absolute; margin-left: 0px; left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+		.info .link {color: #5085BB;}
+
+      .container {
+	width: 1024px;
+	padding: 2em;
+}
+
+.bold-blue {
+	font-weight: bold;
+	color: #0277BD;
+}
+
+      @import "compass/css3";
+      @import url("https://fonts.googleapis.com/css?family=Montserrat");
+      @import 'https://fonts.googleapis.com/css?family=Montserrat:300,400,700';
+      .rwd-table {position: relative; margin-top: 1em; margin-bottom: 1em; min-width: 475px; }
+      .rwd-table tr {border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;}
+      .rwd-table th {display: none;}
+      .rwd-table td {display: block;}
+      .rwd-table td:first-child {padding-top: 0.5em;}
+      .rwd-table td:last-child {padding-bottom: 0.5em;}
+      .rwd-table td:before {
+         content: attr(data-th) ": ";
+         font-weight: bold;
+         width: 0.25em;
+         display: inline-block;
+      }
+      @media (min-width: 480px) {
+         .rwd-table td:before {
+            display: none;
+         }
+      }
+      .rwd-table th, .rwd-table td {text-align: left;}
+      @media (min-width: 475px) {
+         .rwd-table th, .rwd-table td {
+            display: table-cell;
+            padding: 0.25em 0.5em;
+         }
+         .rwd-table th:first-child, .rwd-table td:first-child {
+            padding-left: 0;
+         }
+         .rwd-table th:last-child, .rwd-table td:last-child {
+            padding-right: 0;
+         }
+      }
+      body {
+         padding: 0 2em;
+         font-family: Montserrat, sans-serif;
+         -webkit-font-smoothing: antialiased;
+         text-rendering: optimizeLegibility;
+         color: #444;
+         background: #eee;
+         
+      }
+      h1 {
+         font-weight: normal;
+         letter-spacing: -1px;
+         color: #34495e;
+      }
+      .rwd-table {
+         background: #34495e;
+         color: #fff;
+         border-radius: 0.4em;
+         overflow: hidden;
+      }
+      .rwd-table tr {
+         border-color: #46637f;
+      }
+      .rwd-table th, .rwd-table td {
+         margin: 0.25em 1em;
+      }
+      @media (min-width: 475px) {
+         .rwd-table th, .rwd-table td {
+            padding: 0.25em !important;
+         }
+      }
+      .rwd-table th, .rwd-table td:before {
+         color: #dd5;
+      }
+      
+      body{
+	      background-color: #000000;
+         padding: 0px;
+         margin: 0px;
+      }
+
+      #gradient
+      {
+      width: 100%;
+      height: 800px;
+      padding: 0px;
+      margin: 0px;
+      }
+
+      @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap');
+      #km {
+         /* font-family: "Montserrat", sans-serif; */
+         font-family: "Nanum Gothic", sans-serif;
+         font-size: 10px;
+         background-color: #eee;
+         color: #555;
+         position: relative;
+         bottom: 10px;
+         margin-top: 10px;
+         margin-bottom: 20px;
+      }
+      .ktitle{
+         font-family: "Nanum Gothic", sans-serif;
+         font-size: 16px;
+         font-weight: bold;
+         position: relative;
+         left: 5px;
+         padding: 2px;
+      }
+
+      .inputhd {
+         font-family: "Nanum Gothic", sans-serif;
+         font-size: 10px;
+         position: relative;
+         left: 10px;
+         right: 10px;
+      }
+
+      #result, #result2 {
+         font-family: "Nanum Gothic", sans-serif;
+         font-size: 13px;
+         position: relative;
+         left: 10px;
+         /* padding-bottom: 5px; */
+      }
+
+      #notify {
+         font-family: "Nanum Gothic", sans-serif;
+         font-size: 10px;
+         
+         left: 60px;
+         bottom: 10px;
+         /* padding-bottom: 5px; */
+      }
+      
+      :root {
+      --main-color: #084B8A;
+      --alt-color: #01A9DB;
+      }
+      
+      #cal {
+      font-family: "Montserrat", sans-serif;
+      cursor: pointer;
+      width: 70px;
+      height: 30px;
+      font-size: 1rem;
+      background-color: var(--alt-color);
+      color: #fff;
+      outline: none;
+      border: 1px solid transparent;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      /* margin: 10px 0; */
+      position: relative;
+         left: 20px;
+      }
+
+      #cal2 {
+      font-family: "Montserrat", sans-serif;
+      cursor: pointer;
+      width: 70px;
+      height: 30px;
+      font-size: 1rem;
+      background-color: var(--alt-color);
+      color: #fff;
+      outline: none;
+      border: 1px solid transparent;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      position: absolute;
+         left: 280px;
+         bottom: 57px;
+      }
+
+      #search-btn {
+      font-family: "Montserrat", sans-serif;
+      cursor: pointer;
+      width: 100px;
+      height: 40px;
+      font-size: 1rem;
+      background-color: var(--alt-color);
+      color: #fff;
+      outline: none;
+      border: 1px solid transparent;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+         left: 20px;
+         top: 1px;
+         bottom: 10px;
+      }
+
+      
+      #cal:hover, #cal2:hover, #search-btn:hover {
+      background-color: var(--main-color);
+      }
+
+      #ad_line {
+         height: 1px;
+      }
+
+      #ad_line2 {
+         height: 3px;
+      }
+
+      #ad_line2 {
+         height: 5px;
+      }
+
+      .inputcar {
+         font-family: "Nanum Gothic", sans-serif;
+         font-size: 10px;
+         position: relative;
+         left: 10px;
+         right: 10px;
+      }
+
+      @import "compass/css3";
+      .ball {
+         position: absolute;
+         top: 0;
+         left: -20px;
+         width: 10px;
+         height: 10px;
+         border-radius: 100%;
+         background:  #EFFBFB;
+         margin-left: -5px;
+         transition-property: left, top;
+         transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1), cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
+      p {
+         font-family: "Nanum Gothic", sans-serif;
+         position: relative;
+         margin: 0;
+         display: inline-block;
+         text-align: center;
+         font-size: 40px;
+         outline: none;
+      }
+      .word.lit {
+         color:  #EFFBFB;
+         text-shadow: 0px 0px 3px  #EFFBFB;
+      }
+ 
+      .light-switch {
+         position: absolute;
+         top: 10px;
+         left: 10px;
+         font-size: 50px;
+         color: #aaa;
+         cursor: pointer;
+      }
+      .light-switch:hover {
+         color: #999;
+      }
+      .hint:not(.preload) {
+         transition: top 1s;
+      }
+      .hint.open {
+         top: 0px;
+      }
+      .hint > i {
+         margin: 0 5px;
+         background: #ccc;
+         color: #222;
+         border-radius: 100%;
+         display: inline-block;
+         line-height: 17px;
+         width: 17px;
+         height: 17px;
+      }
+   </style>
+   
+   <head>
+      <meta charset="utf-8"/>
+      <title>Electric Vehicles, Everyone's Network</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+      <script type="text/javascript">
+         $('document').ready(function() {
+            var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
+            var area1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
+            var area2 = ["계양구","남구","남동구","동구","부평구","서구","연수구","중구","강화군","옹진군"];
+            var area3 = ["대덕구","동구","서구","유성구","중구"];
+            var area4 = ["광산구","남구","동구",     "북구","서구"];
+            var area5 = ["남구","달서구","동구","북구","서구","수성구","중구","달성군"];
+            var area6 = ["남구","동구","북구","중구","울주군"];
+            var area7 = ["강서구","금정구","남구","동구","동래구","부산진구","북구","사상구","사하구","서구","수영구","연제구","영도구","중구","해운대구","기장군"];
+            var area8 = ["고양시","과천시","광명시","광주시","구리시","군포시","김포시","남양주시","동두천시","부천시","성남시","수원시","시흥시","안산시","안성시","안양시","양주시","오산시","용인시","의왕시","의정부시","이천시","파주시","평택시","포천시","하남시","화성시","가평군","양평군","여주군","연천군"];
+            var area9 = ["강릉시","동해시","삼척시","속초시","원주시","춘천시","태백시","고성군","양구군","양양군","영월군","인제군","정선군","철원군","평창군","홍천군","화천군","횡성군"];
+            var area10 = ["제천시","청주시","충주시","괴산군","단양군","보은군","영동군","옥천군","음성군","증평군","진천군","청원군"];
+            var area11 = ["계룡시","공주시","논산시","보령시","서산시","아산시","천안시","금산군","당진군","부여군","서천군","연기군","예산군","청양군","태안군","홍성군"];
+            var area12 = ["군산시","김제시","남원시","익산시","전주시","정읍시","고창군","무주군","부안군","순창군","완주군","임실군","장수군","진안군"];
+            var area13 = ["광양시","나주시","목포시","순천시","여수시","강진군","고흥군","곡성군","구례군","담양군","무안군","보성군","신안군","영광군","영암군","완도군","장성군","장흥군","진도군","함평군","해남군","화순군"];
+            var area14 = ["경산시","경주시","구미시","김천시","문경시","상주시","안동시","영주시","영천시","포항시","고령군","군위군","봉화군","성주군","영덕군","영양군","예천군","울릉군","울진군","의성군","청도군","청송군","칠곡군"];
+            var area15 = ["거제시","김해시","마산시","밀양시","사천시","양산시","진주시","진해시","창원시","통영시","거창군","고성군","남해군","산청군","의령군","창녕군","하동군","함안군","함양군","합천군"];
+            var area16 = ["서귀포시","제주시","남제주군","북제주군"];
+
+          // 시/도 선택 박스 초기화
+         $("select[name^=sido]").each(function() {
+            $selsido = $(this);
+            $.each(eval(area0), function() {
+               $selsido.append("<option value='"+this+"'>"+this+"</option>");
+            });
+            $selsido.next().append("<option value=''>구/군 선택</option>");
+         });
+         
+         // 시/도 선택시 구/군 설정
+         
+         $("select[name^=sido]").change(function() {
+            var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
+            var $gugun = $(this).next(); // 선택영역 군구 객체
+            $("option",$gugun).remove(); // 구군 초기화
+         
+            if(area == "area0")
+            $gugun.append("<option value=''>구/군 선택</option>");
+            else {
+               $.each(eval(area), function() {
+                  $gugun.append("<option value='"+this+"'>"+this+"</option>");
+               });
+            }
+         });
+      });
+         </script>
+   </head>
+<body>
+   <!-- Navigation -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <div class="container">
+         <div>
+         <p href="http://electro.badakim.shop/electrocar/map" class="bouncer" style="margin-left:-50px;" contenteditable>Electric Vehicle, Everyone's Network </p>
+         </div>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            {% if request.session.useremail %}
+            <li class="nav-item active">
+               <a class="nav-link" href="http://electro.badakim.shop/electrocar/index">Home
+                 <span class="sr-only">(current)</span>
+               </a>
+             <!-- </li>
+             <li class="nav-item">
+               <a class="nav-link" href="#">Bookmark</a>
+             </li> -->
+             <li class="nav-item">
+               <a class="nav-link" href="#" id="logout2">Logout</a>
+             </li>
+             <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+                        <script>
+                        $("#logout2").on("click",function() {
+                            location.href = "/electrocar_c/logout";
+                        })
+                        </script>
+            {% else %}
+            <li class="nav-item active">
+               <a class="nav-link" href="http://electro.badakim.shop/electrocar/index">Home
+                 <span class="sr-only">(current)</span>
+               </a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" href="http://electro.badakim.shop/electrocar_c/register">Login</a>
+             </li>
+            {% endif %}  
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li> -->
+          </ul>
+       
+      </div>
+   </nav>
+
+  <!-- Page Content -->
+   <div class="container">
+      <div class="row" style="display : block;">
+         <span style="font-size:20px; font-weight: bolder; float:left; padding-left: 5px; height:50px;">충전소 현황</span>
+         <br>
+         <br>
+         <select name="sido1" id="sido1" style="width:120px; height:35px;"></select>
+         &nbsp;&nbsp;&nbsp;&nbsp;
+         <select name="gugun1" id="gugun1" style="width:120px; height:35px;"></select>
+         &nbsp;&nbsp;&nbsp;&nbsp;
+         <button id='search-btn' type='button'>Search</button>
+            <br>
+            <br>
+         </div>
+         <div id="map" style="width:950px;height:530px; margin:auto;"></div>
+         <div style="width:300px; height:500px;">
+            <br>
+            <p style="font-size:20px;">자주 가는 충전소</p>
+            <ul>
+               {% for bookmark in bookmark_list %}
+                  {% if bookmark.user_id_id == request.session.userid %}
+                     <button class='bookmark-btn' id='bookmark-btn' value="{{bookmark.bookmark_station}}">{{bookmark.bookmark_station}}</button><br><br>
+                  {% endif %}
+               {% endfor %}
+            </ul>
+         </div>
+      </div>
+   </div>
+
+   <div id = "car_list" style='display:none;' >
+      <table>
+         
+      </table>
+   </div>
+
+   <div id = "carcharger_list"  style='display:none;'>
+      <select class = "inputcar">
+         <option value="기본연비">기본값(5.5km/kWh)</option>
+   
+      {% for car in carcharger_list %}
+       
+         <option value="{{car.car_name}}" 
+            {% if request.session.cars == car.car_name %}
+                  selected
+            {% endif %}
+         >      
+         {{car.car_name}}</option>
+      {% endfor %}
+   
+      </select>
+
+   </div>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=42225d8b57506c6a81222e189874b805"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=42225d8b57506c6a81222e189874b805&libraries=services"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+
+   //exporte les données sélectionnées
+var $table = $('#table');
+    $(function () {
+        $('#toolbar').find('select').change(function () {
+            $table.bootstrapTable('refreshOptions', {
+                exportDataType: $(this).val()
+            });
+        });
+    })
+
+		var trBoldBlue = $("table");
+
+	$(trBoldBlue).on("click", "tr", function (){
+			$(this).toggleClass("bold-blue");
+	});
+   
+   var marker_list = new Array();
+   var overlay_list = new Array();
+
+   //커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+   function closeOverlay(i) {
+      overlay = overlay_list[i];
+      overlay.setMap(null);
+   }
+
+   function get_km(obj) {
+      marker_address = $(obj).parents('.desc').find('.ellipsis').not('.jibun').text()
+      // console.log(marker_address)
+      $('#result').text("로딩 중..."); 
+      $.ajax({
+         url: '/electrocar/add/',
+         data: { 
+            'input_address': $('#address').val(),
+            'marker_address': marker_address 
+         },
+         success: function(res) {
+            var km = res.km
+            var duration = res.duration
+            $('[id=result]:last').text('해당 충전소까지 ' + km + '로 ' + '약 ' + duration + '이 소요됩니다.') 
+         }
+      });
+   }
+
+
+
+   function get_km2() {
+      $('#result2').text("로딩 중..."); 
+      $.ajax({
+         url: '/electrocar/add2/',
+         data: { 
+            'input_car': $('.inputcar').val(),
+            'input_address1': $('#address1').val(),
+            'input_address2': $('#address2').val(),
+         },
+         success: function(res2) {
+            var cal_re = res2.cal_re
+            $('#result2').text('약 ' + cal_re + '원입니다.')
+            }
+         });
+      }
+ 
+               function execDaumPostcode() { 
+                  new daum.Postcode({ 
+                     oncomplete: function(data) { 
+                  // 각 주소의 노출 규칙에 따라 주소를 조합한다. 
+                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다. 
+                  var fullAddr = data.address; 
+                  // 최종 주소 변수 
+                  var extraAddr = ''; 
+                  // 조합형 주소 변수 // 기본 주소가 도로명 타입일때 조합한다. 
+                  if(data.addressType === 'R'){ 
+                     //법정동명이 있을 경우 추가한다. 
+                     if(data.bname !== ''){ extraAddr += data.bname; } 
+                     // 건물명이 있을 경우 추가한다. 
+                     if(data.buildingName !== ''){ extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName); } 
+                     // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다. 
+                     fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : ''); } 
+                     // 주소 정보를 해당 필드에 넣는다. 
+                     document.getElementById("address").value = fullAddr; 
+                     // 주소로 상세 정보를 검색 
+                     } 
+                  }).open(); 
+               }
+
+               function sample1_execDaumPostcode() { 
+                  new daum.Postcode({ 
+                     oncomplete: function(data) { 
+                  // 각 주소의 노출 규칙에 따라 주소를 조합한다. 
+                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다. 
+                  var fullAddr = data.address; 
+                  // 최종 주소 변수 
+                  var extraAddr = ''; 
+                  // 조합형 주소 변수 // 기본 주소가 도로명 타입일때 조합한다. 
+                  if(data.addressType === 'R'){ 
+                     //법정동명이 있을 경우 추가한다. 
+                     if(data.bname !== ''){ extraAddr += data.bname; } 
+                     // 건물명이 있을 경우 추가한다. 
+                     if(data.buildingName !== ''){ extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName); } 
+                     // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다. 
+                     fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : ''); } 
+                     // 주소 정보를 해당 필드에 넣는다. 
+                     document.getElementById("address1").value = fullAddr; 
+                     // 주소로 상세 정보를 검색 
+                     } 
+                  }).open(); 
+               }
+
+               function sample2_execDaumPostcode() { 
+                  new daum.Postcode({ 
+                     oncomplete: function(data) { 
+                  // 각 주소의 노출 규칙에 따라 주소를 조합한다. 
+                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다. 
+                  var fullAddr = data.address; 
+                  // 최종 주소 변수 
+                  var extraAddr = ''; 
+                  // 조합형 주소 변수 // 기본 주소가 도로명 타입일때 조합한다. 
+                  if(data.addressType === 'R'){ 
+                     //법정동명이 있을 경우 추가한다. 
+                     if(data.bname !== ''){ extraAddr += data.bname; } 
+                     // 건물명이 있을 경우 추가한다. 
+                     if(data.buildingName !== ''){ extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName); } 
+                     // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다. 
+                     fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : ''); } 
+                     // 주소 정보를 해당 필드에 넣는다. 
+                     document.getElementById("address2").value = fullAddr; 
+                     // 주소로 상세 정보를 검색 
+                     } 
+                  }).open(); 
+               }
+
+   $('body').on('click', '[name=bookmark_submit]', function() {
+      data = $(this).parent().serialize()
+      console.log(data);
+      $.ajax({
+         url: '/electrocar_c/bmadd/',
+         data: data,
+         success: function(res) {
+            // pass
+         }
+      })
+      return false;
+   });
+
+   // $('#bookmark-btn').click(function(){
+   //    var stat_name = $('#bookmark-btn').val();
+   //    for (i=0; i<res.length; i++) {
+   //       if (res[i].statNm == stat_name) {
+   //          var target = res[i];
+   //          latlng = new kakao.maps.LatLng(res[i].lat, res[i].lng);
+   //          }
+   //       }
+   //    map.setLevel(6)
+   //    map.panTo(latlng)
+   //    }
+   // );
+
+
+   $('#search-btn').click(function() {
+      var sido = $('#sido1').val();
+      var goo = $('#gugun1').val();
+      $.ajax({
+         url: '/electrocar/mapdata/',
+         data: {
+            'sido': sido,
+            'goo': goo
+         },
+         success: function(res) {
+            marker_list = new Array();
+            overlay_list = new Array();      
+            $('#map').empty();
+
+            var container = document.getElementById('map');
+            var options = {
+               center: new kakao.maps.LatLng(res[0].lat, res[0].lng),
+               level: 3
+            };
+
+            var map = new kakao.maps.Map(container, options);
+            //지도 재설정할 범위 정보를 가지고 있을 LatLngBounds
+            var bounds = new kakao.maps.LatLngBounds();
+
+            // 충전소 여러개 마커 출력
+            for(var i = 0; i < res.length; i++) {
+               latlng = new kakao.maps.LatLng(res[i].lat, res[i].lng)
+               var marker = new kakao.maps.Marker({
+                  map: map,
+                  position: latlng,
+                  // title: res[i].statNm
+               })
+               marker_list.push(marker)
+               //latlngbounds 객체에 좌표 추가
+               bounds.extend(latlng)
+               var link = res[i].lat + "," + res[i].lng
+
+               if (res[i].chgertype == 01){
+                  var chgertype = "DC 차데모"
+                  var carType = "블루온, 레이, 쏘울, 아이오닉, Leaf"
+                  }  
+                  else if (res[i].chagertype == 02) {
+                     var chgerType = "AC 완속"
+                     var carType = "차종 구분 없음"
+                  }
+                  else if (res[i].chagertype == 03) {
+                     var chgerType = "DC 차데모" + "<br>" + "AC 3상"
+                     var carType = "블루온, 레이, 쏘울, 아이오닉, Leaf" + "<br>" + "SM3Z.E., 테슬라 모델"
+                  }
+                  else if (res[i].chagertype == 04) {
+                     var chgerType = "DC 콤보"
+                     var carType = "아이오닉, 코나, 니로, 쏘울, 볼트, i3"
+                  }
+                  else if (res[i].chagertype == 05) {
+                     var chgerType = "DC 차데모" + "<br>" + "DC 콤보"
+                     var carType = "블루온, 레이, 쏘울, 아이오닉, Leaf" + "<br>" + "아이오닉, 코나, 니로, 쏘울, 볼트, i3"
+                  }
+                  else if (res[i].chagertype == 06) {
+                     var chgerType = "DC 차데모" + "<br>" + "AC 3상" + "<br>" + "DC 콤보"
+                     var carType = "블루온, 레이, 쏘울, 아이오닉, Leaf" + "<br>" +  "SM3Z.E., 테슬라 모델" + "<br>" + "아이오닉, 코나, 니로, 쏘울, 볼트, i3"
+                  }
+                  else if (res[i].chagertype == 07) {
+                     var chgerType = "AC 3상"
+                     var carType = "SM3Z.E., 테슬라 모델"
+                  }
+
+
+               var content_table = ''
+               var l = 0
+               for (var j=0; j<res.length;j++) {
+                  if (res[i].statNm == res[j].statNm){
+                     l += 1
+                     content_table += 
+                     '<tr>' +
+                        '<td data-th="Movie Title">' + l +'</td>' +
+                        '<td data-th="Movie Title">' + res[i].power_type + 'kW' + '</td>' +
+                        '<td data-th="Genre">'+ chgerType +'</td>' +
+                        '<td data-th="Gross">'+ carType +'</td>' +
+                        '<td data-th="Year">'+ res[i].stat +'</td>' +
+                     '</tr>'
+                  }
+               }
+         
+
+
+
+
+               var content = '<div class="wrap">' + 
+               '    <div class="info">' + 
+               '        <div class="title">' + 
+                           res[i].statNm + 
+               '            <div class="close" onclick="closeOverlay(' + i + ')" title="닫기"></div>' + 
+               '        </div>' + 
+               '        <div class="body">' + 
+               '            <div class="desc">' + 
+               '                <div class="ellipsis">' + res[i].address + '</div>' + 
+               '                <div class="jibun ellipsis">' + res[i].busi_nm + '관리 / ' + res[i].use_time + '</div>' + 
+               '                <div><a href="https://map.kakao.com/link/roadview/'+link+'"  target="_blank" class="link">Road View</a></div>' +
+               '<form method="get" action="/electrocar_c/bmadd/" class="overlay_form">' +
+               '<input name="station_input" type="hidden" value="' + res[i].statNm + '">' +
+               '<input name="bookmark_submit" type="submit" value="즐겨찾기 등록">' + '</form>' + //session.useremail , res[i].address
+                           '<table class="rwd-table">' +
+                                 '<tr>' +
+                                    '<th>Index</th>' +
+                                    '<th>Power Type</th>' +
+                                    '<th>Charger Type</th>' +
+                                    '<th>Car Type</th>' +
+                                    '<th>Status</th>' +
+                                    '</tr>' +
+                                    content_table +
+                                 '</table>' +
+                           '<div id="ad_line"></div>' +
+                           '<div id="km">' +
+                              '<div id="ad_line3"></div>' +
+                              '<p class = "ktitle">충전소 소요 거리</p>' + '<br>' +
+                              '<input class = "inputhd" id="address" onclick="execDaumPostcode()" type="text" size=50 placeholder="출발 지점을 입력해주세요.">' + 
+                              '<button id="cal" onclick="get_km(this)">Cal</button>' + '<br>' +
+                              '<p id="result">' + '해당 충전소까지의 거리와 시간입니다.' + '</p>' + '<br>' +
+                              '<p class = "ktitle">주행요금</p>' + '<br>' + 
+                              $('#carcharger_list').html() + 
+                              '<div id="ad_line2"></div>' +
+                              '<input class = "inputhd" id="address1" onclick="sample1_execDaumPostcode()" type="text" size=50 placeholder="출발 지점을 입력해주세요.">' + '</br>' +
+                              '<div id="ad_line2"></div>' +
+                              '<input class = "inputhd" id="address2" onclick="sample2_execDaumPostcode()" type="text" size=50 placeholder="도착 지점을 입력해주세요.">' + '<br>' +
+                              '<div id="ad_line2"></div>' +
+                              '<div>' + 
+                                 '<p id="result2">'  + '해당 거리까지의 예상 주행요금입니다.' + '</p>' + '<br>' +
+                                 '<button id="cal2" onclick="get_km2()">Cal</button>' + '<br>' +
+                              '<div>' + 
+                              '<p id="notify">'  + '해당 요금은 각 차종별 연비와 환경부 충전소 기준의 가격으로 계산되었습니다.' + '</p>' +
+                           '</div>' + 
+               '        </div>' +              
+               '     </div>';
+
+             
+         
+               // addrBtn.onclick = function(){
+               //    var addr = document.querySelector("#addr").value;
+               // };
+
+               // 마커 위에 커스텀오버레이를 표시합니다
+               // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+            
+               var overlay = new kakao.maps.CustomOverlay({
+                  content: content,
+                  map: map,
+                  position: marker_list[i].getPosition()   
+               });
+               overlay_list.push(overlay);
+
+               // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+               (function(idx) {
+                  kakao.maps.event.addListener(marker_list[idx], 'click', function() {
+                     console.log(idx)
+                     overlay_list[idx].setMap(map);
+
+                    
+                  });
+               })(i);
+               
+               closeOverlay(i);
+
+               //지도 범위 조절하기
+               bounds.extend(marker_list[i].getPosition())               
+
+               // (function(idx) {
+               // kakao.maps.event.addListener(marker_list[idx], 'click', function(){
+               //    var moveLatLon = new kakao.maps.LatLng(Number(res[idx].lat) + 0.01, res[idx].lng);
+               //    console.log(moveLatLon)
+               //    map.panTo(moveLatLon)
+               //    })
+               // })(i);
+               // //지도 범위 조절하기
+               // bounds.extend(marker_list[i].getPosition())
+            }
+
+
+
+            for(var i = 0; i < res.length; i++) {
+               (function(idx) {
+                  kakao.maps.event.addListener(marker_list[idx], 'click', function(){
+                     map.setLevel(6)
+                     var moveLatLon = new kakao.maps.LatLng(Number(res[idx].lat) + 0.01, res[idx].lng);
+                     map.panTo(moveLatLon)
+                     })
+                  })(i);
+               }
+
+            function setBounds() {
+               map.setBounds(bounds);
+            }
+         setBounds()
+         }
+      })
+
+   });
+
+   $.ajax({
+      url: '/electrocar/mapdata/',
+      success: function(res) {
+         marker_list = new Array();
+         overlay_list = new Array();      
+         $('#map').empty();
+         console.log('res', res)
+         var container = document.getElementById('map');
+         var options = {
+            center: new kakao.maps.LatLng(res[0].lat, res[0].lng),
+            level: 3
+         };
+
+         $('.bookmark-btn').click(function(){
+            var stat_name = $(this).val();
+            console.log(stat_name);
+            for (i=0; i<res.length; i++) {
+               if (res[i].statNm == stat_name) {
+                  var target = res[i];
+                  latlng = new kakao.maps.LatLng(res[i].lat, res[i].lng);
+               }
+            }
+            map.setLevel(6)
+            map.panTo(latlng)
+            }
+         );
+
+         var map = new kakao.maps.Map(container, options);
+
+         //지도 재설정 범위 정보 latlngbounds
+         var bounds = new kakao.maps.LatLngBounds();
+
+         // 충전소 여러개 마커 출력
+         for(var i = 0; i < res.length; i++) {
+            latlng = new kakao.maps.LatLng(res[i].lat, res[i].lng);
+            var marker = new kakao.maps.Marker({
+               map: map,
+               position: latlng,
+               // title: res[i].statNm
+            })
+            marker_list.push(marker)
+
+            //latlngbounds 객체에 좌표 추가
+            bounds.extend(latlng);
+
+            var link = res[i].lat + "," + res[i].lng
+
+            if (res[i].chgertype == 01){
+                  var chgertype = "DC 차데모"
+                  var carType = "블루온, 레이, 쏘울, 아이오닉"
+                  }  
+                  else if (res[i].chagertype == 02) {
+                     var chgerType = "AC 완속"
+                     var carType = "몰라"
+                  }
+                  else if (res[i].chagertype == 03) {
+                     var chgerType = "DC 차데모" + "<br>" + "AC 3상"
+                     var carType = "블루온, 레이, 쏘울, 아이오닉" + "<br>" + "SM3 ZE"
+                  }
+                  else if (res[i].chagertype == 04) {
+                     var chgerType = "DC 콤보"
+                     var carType = "스파크, 볼트, i3"
+                  }
+                  else if (res[i].chagertype == 05) {
+                     var chgerType = "DC 차데모" + "<br>" + "DC 콤보"
+                     var carType = "블루온, 레이, 쏘울, 아이오닉" + "<br>" + "스파크, 볼트, i3"
+                  }
+                  else if (res[i].chagertype == 06) {
+                     var chgerType = "DC 차데모" + "<br>" + "AC 3상" + "<br>" + "DC 콤보"
+                     var carType = "블루온, 레이, 쏘울, 아이오닉" + "<br>" +  "SM3 ZE" + "<br>" + "스파크, 볼트, i3"
+                  }
+                  else if (res[i].chagertype == 07) {
+                     var chgerType = "AC 3상"
+                     var carType = "SM3 ZE"
+                  }
+
+            var content = '<div class="wrap">' + 
+               '    <div class="info">' + 
+               '        <div class="title">' + 
+                           res[i].statNm + 
+               '            <div class="close" onclick="closeOverlay(' + i + ')" title="닫기"></div>' + 
+               '        </div>' + 
+               '        <div class="body">' + 
+               '            <div class="desc">' + 
+               '                <div class="ellipsis" style="width:70%">' + res[i].address + '</div>' +  
+               '                <div class="jibun ellipsis">' + res[i].busi_nm + '관리 / ' + res[i].use_time + '</div>' + 
+               '                <div><a href="https://map.kakao.com/link/roadview/'+link+'"  target="_blank" class="link">Road View</a></div>' + 
+               '<table class="rwd-table">' +
+                  '<tr>' +
+                     '<th>Index</th>' +
+                     '<th>Power Type</th>' +
+                     '<th>Charger Type</th>' +
+                     '<th>Car Type</th>' +
+                     '<th>Status</th>' +
+
+                  '</tr>' +
+                  '<tr>' +
+                     '<td data-th="Movie Title">' + '1' +'</td>' +
+                     '<td data-th="Movie Title">' + res[i].power_type + 'kW'  +'</td>' +
+                     '<td data-th="Genre">'+ chgerType +'</td>' +
+                     '<td data-th="Gross">'+ carType +'</td>' +
+                     '<td data-th="Year">'+ res[i].stat +'</td>' +
+                  '</tr>' +
+               '</table>'+
+
+               '</div>' + 
+               '</div>'  
+
+            // 마커 위에 커스텀오버레이를 표시합니다
+            // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+         
+            var overlay = new kakao.maps.CustomOverlay({
+               content: content,
+               map: map,
+               position: marker_list[i].getPosition()   
+            });
+            overlay_list.push(overlay);
+
+            // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+            (function(idx) {
+               kakao.maps.event.addListener(marker_list[idx], 'click', function() {
+                  console.log(idx)
+                  overlay_list[idx].setMap(map);
+               });
+            })(i);
+            
+            closeOverlay(i);
+            
+            (function(idx) {
+               kakao.maps.event.addListener(marker_list[idx], 'click',function(){
+                  map.setLevel(6)
+                  var moveLatLon = new kakao.maps.LatLng(Number(res[idx].lat) + 0.01, res[idx].lng);
+                  console.log(res[idx].lat, res[idx].lat-1) 
+                  map.panTo(moveLatLon)
+               });
+            })(i)
+            
+            
+
+         }
+         function setBounds() {
+            map.setBounds(bounds);
+         }
+         setBounds()
+      }
+   })
+
+      // Set bounce animation speed
+      var bounceSpeed = 7;
+
+      /* Ball Bouncing On Text © Yogev Ahuvia
+      * ===========================================
+      * This bouncing ball jumps over the words
+      * inside the contentEditable paragraph.
+      * The text itself is editable, the jump speed
+      * is dynamic, and the ball bounce animation 
+      * duration is set by the length of each word.
+      *
+      * Have you tried switching off the light? :)
+      * -------------------------------------------
+      * Works best on Google Chrome.
+      */
+
+      var Bouncer = function(elem) {
+      // init bouncable element and helpers
+      this.$elem = $(elem);
+      this.$ball = $('<div class="ball"></div>');
+      this.$space = $('<span>&nbsp;</span>');
+      this.timers = [];
+      
+      // handle in-place editing events
+      this.$elem.on('blur', (function(instance) {
+         return function() {
+            instance.init();
+            instance.bounce();
+         };
+      })(this));
+      
+      this.$elem.on('keypress', function(e) {
+         var code = (e.keyCode ? e.keyCode : e.which);
+         if (code == 13) {
+            $(this).blur();
+         }
+      });
+      
+      // make it bounce
+      this.init();
+      this.bounce();
+      };
+
+      Bouncer.prototype.init = function() {
+      // get element text for parsing
+      this.elemText = this.$elem.text();
+      
+      // clone element for new text injection
+      this.$cloned = this.$elem.clone()
+                                 .empty()
+                                 .addClass('cloned')
+                                 .removeAttr('contenteditable')
+                                 .appendTo(this.$elem.parent());
+      
+      // handle cloned element termination
+      this.$cloned.on('click', (function(instance) {
+         return function() {
+            instance.reset();
+            instance.$elem.focus();
+            document.execCommand('selectAll', false, null);
+         };
+      })(this));
+      
+      this.$elem.hide(); // hide original element while animating
+      this.$ball.appendTo(this.$cloned); // add ball to new element
+      this.contentArray = this.elemText.split(' ');
+      };
+
+      Bouncer.prototype.bounce = function() {
+      // ball animation incrementing delay
+      var incrementingDelay = 0;
+      
+      // run through the text
+      for (var j = 0; j < this.contentArray.length; j++) {
+         var word = this.contentArray[j];
+         
+         // handle multiple spaces
+         if (/\s/g.test(word)) {
+            this.$space.clone().appendTo(this.$cloned);
+            this.contentArray.splice(j, 1);
+            j--;
+            continue;
+         }
+         
+         // escape each word with a span, add it to cloned element
+         var $word = $('<span class="word">' + word + '</span>');
+         this.$cloned.append($word);
+         var wordLength = $word.width();
+         
+         // add white space elements between words
+         if (j+1 < this.contentArray.length) {
+            this.$space.clone().appendTo(this.$cloned);
+         }
+         
+         // get ball position above word
+         var ballLeft = $word[0].offsetLeft + wordLength/2;
+         var ballTop = $word[0].offsetTop;
+         
+         var ballProps = {left: ballLeft,
+                           top: ballTop,
+                           wordLength: wordLength,
+                           wordIndex: j};
+         
+         // preset timers for the whole text
+         var timer = setTimeout((function(instance, ballProps) {
+            return function() {
+            instance.animateBall(ballProps);
+            };
+         })(this, ballProps), incrementingDelay);
+         this.timers.push(timer);
+         
+         incrementingDelay += wordLength * bounceSpeed;
+      }
+      
+      // hide ball when finished bouncing
+      var timer = setTimeout((function(instance) {
+         return function() {
+            instance.$ball.fadeOut();
+         };
+      })(this), incrementingDelay);
+      this.timers.push(timer);
+      }
+
+      Bouncer.prototype.animateBall = function(ballProps) {
+      
+      // set ball transition duration per word length
+      var leftDuration = ballProps.wordLength * bounceSpeed + 'ms';
+      var topDuration = (ballProps.wordLength * bounceSpeed / 2) + 'ms';
+      this.$ball.css('transition-duration', 
+                     leftDuration + ', ' + topDuration);
+      
+      // animate ball halfway and up
+      var ballOffsetLeft = this.$ball[0].offsetLeft;
+      var delta = ballProps.left - ballOffsetLeft;
+      var ballHalfWay = ballOffsetLeft + delta;
+      this.$ball.css({'left': ballHalfWay + 'px', 
+                        'top': '-50px'});
+      
+      // finish animation when the ball reach halfway
+      var halfwayReached = ballProps.wordLength * bounceSpeed / 2;
+      var timer = setTimeout((function(instance, ballProps) {
+         return function() {
+            
+            // animate ball to finish the bounce
+            instance.$ball.css({'left': ballProps.left + 'px' , 
+                              'top': '0px'});
+            
+            // light the bounced word when the ball bounces on it
+            var bouncedOnWord = ballProps.wordLength * bounceSpeed / 2;
+            var timer = setTimeout((function(instance, ballProps) {
+            return function() {
+               instance.$cloned
+                        .find('.word')
+                        .eq(ballProps.wordIndex)
+                        .addClass('lit');
+            };
+            })(instance, ballProps), bouncedOnWord);
+            instance.timers.push(timer);
+         };
+      })(this, ballProps), halfwayReached);
+      this.timers.push(timer);
+      }
+
+      Bouncer.prototype.reset = function() {
+      for (var i = 0; i < this.timers.length; i++) {
+         clearTimeout(this.timers[i]);
+      }
+      this.timers.length = 0;
+      
+      this.$elem.show();
+      this.$cloned.remove();
+      this.$ball.removeAttr('style');
+      }
+
+      var bouncers = [];
+      $(document).ready(function() {
+      // make all 'bouncer' classes, bounce
+      $('.bouncer').each(function(index, element) {
+         bouncers.push(new Bouncer(element));
+      });;
+      
+      // handle light switch
+      $('.light-switch').on('click', function() {
+         $('body').toggleClass('dark');
+         
+         for (var i = 0; i < bouncers.length; i++) {
+            bouncers[i].reset();
+            bouncers[i].init();
+            bouncers[i].bounce();
+         }
+      });
+      
+      // show hint
+      $('.hint').removeClass('preload');
+      setTimeout(function() {
+         $('.hint').addClass('open');
+         setTimeout(function() {
+            $('.hint').removeClass('open');
+         }, 4000);
+      }, 6000);
+      });
+
+	</script>
+</body>
+</html>

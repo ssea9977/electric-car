@@ -1,0 +1,7 @@
+Django
+bs4
+requests
+selenium
+pyautogui
+datetime
+

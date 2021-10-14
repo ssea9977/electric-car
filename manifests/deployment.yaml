@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: electric-car
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: electric-car
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 25%
+  template:
+    metadata:
+      name: electric-car
+      labels:
+        app: electric-car
+    spec:
+      containers:
+      - name: electric-car-container
+        image: ssea9977/electric-car:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 300m
+      restartPolicy: Always
