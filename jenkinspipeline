@@ -59,7 +59,7 @@ spec:
           container('docker') {
             sh """
             cd electric-car
-            docker build -t \$PROJECT_NAME .
+            docker build -t \$PROJECT_NAME:${env.BUILD_NUMBER} .
             """
           }
         }    
@@ -73,7 +73,7 @@ spec:
               passwordVariable: 'DOCKERHUB_PASSWORD']]) {
               sh """
                 docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}
-                docker tag \$PROJECT_NAME ${DOCKERHUB_USER}/\$PROJECT_NAME:${env.BUILD_NUMBER}
+                docker tag \$PROJECT_NAME:${env.BUILD_NUMBER} ${DOCKERHUB_USER}/\$PROJECT_NAME:${env.BUILD_NUMBER}
                 docker push ${DOCKERHUB_USER}/\$PROJECT_NAME:${env.BUILD_NUMBER}
               """
               }
