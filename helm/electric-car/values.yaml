@@ -40,8 +40,8 @@ service:
   type: LoadBalancer
   port: 80
   externalIPs: 
-  - 172.31.10.152
-  # - 172.31.7.116
+  # - 172.31.10.152
+    - 172.31.7.116
   # - 172.31.43.67
 
 ingress:
