@@ -1,6 +1,6 @@
 FROM python:3.9.5
 
-RUN pip3 install django bs4 requests selenium==3.10.0 pyautogui datetime
+RUN pip3 install django bs4 requests selenium pyautogui datetime
 
 
 WORKDIR /usr/src/app
