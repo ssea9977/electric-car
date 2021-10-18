@@ -87,7 +87,7 @@ spec:
                       branches: [[name: '*/master' ]],
                       extensions: scm.extensions,
                       userRemoteConfigs: [[
-                          url: 'git@github.com:ssea9977/electric-car.git',
+                          url: 'git@github.com:ssea9977/electric-car-manifests.git',
                           credentialsId: 'mygit',
                       ]]
               ])
@@ -98,7 +98,6 @@ spec:
                         export GIT_SSH_COMMAND="ssh -oStrictHostKeyChecking=no"
                         git config --global user.email "ssea9977@gmail.com"
                         git checkout master
-                        cd helm/electric-car
 			cat <<EOF > Chart.yaml
 apiVersion: v2
 name: electric-car

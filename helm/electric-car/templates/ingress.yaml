@@ -58,8 +58,4 @@ spec:
               {{- end }}
           {{- end }}
     {{- end }}
-status:
-  loadBalancer:
-    ingress:
-    - ip: 172.31.10.152
 {{- end }}
