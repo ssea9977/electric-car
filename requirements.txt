@@ -4,4 +4,3 @@ requests
 selenium
 pyautogui
 datetime
-
